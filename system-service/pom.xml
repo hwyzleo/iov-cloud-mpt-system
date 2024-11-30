@@ -22,35 +22,30 @@
         <dependency>
             <groupId>net.hwyz.iov.cloud.mpt</groupId>
             <artifactId>system-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <!-- 框架：安全 -->
         <dependency>
             <groupId>net.hwyz.iov.cloud.framework</groupId>
             <artifactId>framework-security-starter</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-        <!-- 框架：日志 -->
+        <!-- 框架：审计 -->
         <dependency>
             <groupId>net.hwyz.iov.cloud.framework</groupId>
-            <artifactId>framework-log-starter</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <artifactId>framework-audit-starter</artifactId>
         </dependency>
 
         <!-- 框架：数据权限范围 -->
         <dependency>
             <groupId>net.hwyz.iov.cloud.framework</groupId>
             <artifactId>framework-datascope-starter</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <!-- 框架：MySQL -->
         <dependency>
             <groupId>net.hwyz.iov.cloud.framework</groupId>
             <artifactId>framework-mysql-starter</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <!-- Java Servlet -->
