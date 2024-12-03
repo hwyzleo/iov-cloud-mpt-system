@@ -13,6 +13,7 @@ import net.hwyz.iov.cloud.framework.security.service.TokenService;
 import net.hwyz.iov.cloud.framework.security.util.SecurityUtils;
 import net.hwyz.iov.cloud.mpt.system.api.RemoteFileService;
 import net.hwyz.iov.cloud.mpt.system.api.domain.SysFile;
+import net.hwyz.iov.cloud.mpt.system.api.domain.SysPwd;
 import net.hwyz.iov.cloud.mpt.system.api.domain.SysUser;
 import net.hwyz.iov.cloud.mpt.system.api.model.LoginUser;
 import net.hwyz.iov.cloud.mpt.system.service.service.ISysUserService;
@@ -83,13 +84,14 @@ public class SysProfileController extends BaseController {
      */
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping("/updatePwd")
-    public AjaxResult updatePwd(String oldPassword, String newPassword) {
+    public AjaxResult updatePwd(@RequestBody SysPwd pwd) {
         String username = SecurityUtils.getUsername();
         SysUser user = userService.selectUserByUserName(username);
         String password = user.getPassword();
-        if (!SecurityUtils.matchesPassword(oldPassword, password)) {
+        if (!SecurityUtils.matchesPassword(pwd.getOldPassword(), password)) {
             return error("修改密码失败，旧密码错误");
         }
+        String newPassword = pwd.getNewPassword();
         if (SecurityUtils.matchesPassword(newPassword, password)) {
             return error("新密码不能与旧密码相同");
         }
