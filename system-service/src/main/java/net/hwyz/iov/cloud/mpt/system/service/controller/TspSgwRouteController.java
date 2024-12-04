@@ -23,7 +23,7 @@ import java.util.List;
  * @author hwyz_leo
  */
 @RestController
-@RequestMapping("/tsp-sgw/route")
+@RequestMapping("/route")
 public class TspSgwRouteController extends BaseController {
     @Autowired
     private ITspSgwRouteService routeService;
