@@ -10,6 +10,7 @@ import net.hwyz.iov.cloud.framework.common.web.page.TableDataInfo;
 import net.hwyz.iov.cloud.framework.security.annotation.RequiresPermissions;
 import net.hwyz.iov.cloud.framework.security.util.SecurityUtils;
 import net.hwyz.iov.cloud.mpt.system.api.domain.TspSgwRoute;
+import net.hwyz.iov.cloud.mpt.system.service.service.ExTspSgwRouteService;
 import net.hwyz.iov.cloud.mpt.system.service.service.ITspSgwRouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -27,6 +28,8 @@ import java.util.List;
 public class TspSgwRouteController extends BaseController {
     @Autowired
     private ITspSgwRouteService routeService;
+    @Autowired
+    private ExTspSgwRouteService exTspSgwRouteService;
 
     @RequiresPermissions("tsp:sgw:route:list")
     @GetMapping("/list")
@@ -62,8 +65,9 @@ public class TspSgwRouteController extends BaseController {
     @PostMapping
     public AjaxResult add(@Validated @RequestBody TspSgwRoute route) {
         route.setCreateBy(SecurityUtils.getUserId().toString());
-        return toAjax(routeService.insertRoute(route));
-
+        int result = routeService.insertRoute(route);
+        exTspSgwRouteService.add(route);
+        return toAjax(result);
     }
 
     /**
@@ -74,7 +78,9 @@ public class TspSgwRouteController extends BaseController {
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody TspSgwRoute route) {
         route.setModifyBy(SecurityUtils.getUserId().toString());
-        return toAjax(routeService.updateRoute(route));
+        int result = routeService.updateRoute(route);
+        exTspSgwRouteService.update(route);
+        return toAjax(result);
     }
 
     /**
@@ -82,9 +88,11 @@ public class TspSgwRouteController extends BaseController {
      */
     @RequiresPermissions("tsp:sgw:route:remove")
     @Log(title = "TSP服务网关路由管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{roleIds}")
-    public AjaxResult remove(@PathVariable Long[] roleIds) {
-        return toAjax(routeService.deleteRouteByIds(roleIds));
+    @DeleteMapping("/{routeIds}")
+    public AjaxResult remove(@PathVariable Long[] routeIds) {
+        int result = routeService.deleteRouteByIds(routeIds);
+        exTspSgwRouteService.delete(routeIds);
+        return toAjax(result);
     }
 
 }
